@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .palette {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+        .color-box {
+            width: 100px;
+            height: 150px;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: bold;
+            user-select: none;
+        }
+        .locked {
+            border: 3px solid #000;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Palette Generator</h1>
+    <div class="palette" id="palette"></div>
+    <button onclick="generatePalette()">Generate New Palette</button>
+    
+    <script>
+        const paletteContainer = document.getElementById("palette");
+        let lockedColors = [false, false, false, false, false];
+
+        function randomColor() {
+            return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+        }
+
+        function generatePalette() {
+            const colors = document.querySelectorAll(".color-box");
+            colors.forEach((box, index) => {
+                if (!lockedColors[index]) {
+                    const newColor = randomColor();
+                    box.style.backgroundColor = newColor;
+                    box.textContent = newColor;
+                }
+            });
+        }
+
+        function copyColor(index) {
+            const colorText = document.querySelectorAll(".color-box")[index].textContent;
+            navigator.clipboard.writeText(colorText);
+            alert(`Copied: ${colorText}`);
+        }
+
+        function toggleLock(index) {
+            lockedColors[index] = !lockedColors[index];
+            const box = document.querySelectorAll(".color-box")[index];
+            box.classList.toggle("locked");
+        }
+
+        function createPalette() {
+            paletteContainer.innerHTML = "";
+            for (let i = 0; i < 5; i++) {
+                const colorBox = document.createElement("div");
+                colorBox.classList.add("color-box");
+                colorBox.addEventListener("click", () => copyColor(i));
+                colorBox.addEventListener("dblclick", () => toggleLock(i));
+                paletteContainer.appendChild(colorBox);
+            }
+            generatePalette();
+        }
+
+        createPalette();
+    </script>
+</body>
+</html>

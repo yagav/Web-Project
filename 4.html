@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            transition: background 0.5s, color 0.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+        }
+        h1 {
+            font-size: 1.5rem;
+        }
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+        }
+        .info {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        .refresh-btn {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #ffdd44;
+            color: black;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+        .refresh-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌤 Weather Dashboard</h1>
+        <img id="weatherIcon" class="weather-icon" src="" alt="Weather Icon">
+        <div id="temperature" class="info">Temperature: --°C</div>
+        <div id="humidity" class="info">Humidity: --%</div>
+        <div id="windSpeed" class="info">Wind Speed: -- km/h</div>
+        <button class="refresh-btn" onclick="fetchWeather()">Refresh</button>
+    </div>
+    
+    <script>
+        function fetchWeather() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const apiKey = '118214dffd10dab742947e3b15848c41';
+                    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+                    
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById("temperature").textContent = `Temperature: ${data.main.temp}°C`;
+                            document.getElementById("humidity").textContent = `Humidity: ${data.main.humidity}%`;
+                            document.getElementById("windSpeed").textContent = `Wind Speed: ${data.wind.speed} km/h`;
+                            document.getElementById("weatherIcon").src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+                            updateTheme(data.weather[0].main);
+                        })
+                        .catch(error => alert("Failed to fetch weather data"));
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        
+        function updateTheme(weather) {
+            let gradient;
+            switch (weather) {
+                case "Clear": gradient = "#ffdd44, #ff7e5f"; break;
+                case "Clouds": gradient = "#bdc3c7, #2c3e50"; break;
+                case "Rain": gradient = "#00c6fb, #005bea"; break;
+                case "Snow": gradient = "#e6e9f0, #eef2f3"; break;
+                case "Thunderstorm": gradient = "#20002c, #cbb4d4"; break;
+                default: gradient = "#6dd5ed, #2193b0";
+            }
+            document.body.style.background = `linear-gradient(135deg, ${gradient})`;
+        }
+        
+        fetchWeather();
+    </script>
+</body>
+</html>

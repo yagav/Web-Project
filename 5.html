@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #42e695, #3bb2b8);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+        input, select {
+            width: 80%;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: #ff477e;
+            color: white;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .expense-list {
+            margin-top: 20px;
+            text-align: left;
+            color: white;
+        }
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .delete-btn {
+            background: red;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Expense Tracker</h1>
+        <input type="text" id="expenseName" placeholder="Expense Name">
+        <input type="number" id="expenseAmount" placeholder="Amount">
+        <select id="expenseCategory">
+            <option value="Food">Food</option>
+            <option value="Bills">Bills</option>
+            <option value="Travel">Travel</option>
+            <option value="Other">Other</option>
+        </select>
+        <button onclick="addExpense()">Add Expense</button>
+        <h2>Total: $<span id="totalAmount">0</span></h2>
+        <div class="expense-list" id="expenseList"></div>
+        <canvas id="expenseChart" width="300" height="300"></canvas>
+    </div>
+    
+    <script>
+        let expenses = [];
+        let chart;
+        
+        function addExpense() {
+            let name = document.getElementById("expenseName").value.trim();
+            let amount = parseFloat(document.getElementById("expenseAmount").value);
+            let category = document.getElementById("expenseCategory").value;
+            
+            if (!name || isNaN(amount) || amount <= 0) return;
+            
+            let expense = { name, amount, category };
+            expenses.push(expense);
+            updateUI();
+        }
+        
+        function deleteExpense(index) {
+            expenses.splice(index, 1);
+            updateUI();
+        }
+        
+        function updateUI() {
+            let total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+            document.getElementById("totalAmount").textContent = total.toFixed(2);
+            
+            let list = document.getElementById("expenseList");
+            list.innerHTML = "";
+            expenses.forEach((exp, index) => {
+                let div = document.createElement("div");
+                div.classList.add("expense-item");
+                div.innerHTML = `${exp.name} - $${exp.amount} (${exp.category}) <button class='delete-btn' onclick='deleteExpense(${index})'>X</button>`;
+                list.appendChild(div);
+            });
+            updateChart();
+        }
+        
+        function updateChart() {
+            let categories = {};
+            expenses.forEach(exp => {
+                categories[exp.category] = (categories[exp.category] || 0) + exp.amount;
+            });
+            
+            let labels = Object.keys(categories);
+            let data = Object.values(categories);
+            
+            if (chart) chart.destroy();
+            
+            chart = new Chart(document.getElementById("expenseChart"), {
+                type: "pie",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4bc0c0"]
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+</html>
