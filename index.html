@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      background: #333;
+      color: #fff;
+      padding: 1rem 0;
+    }
+
+    header .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover {
+      color: #ff6347;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url('https://wallpapercat.com/w/full/a/4/8/2139786-1920x1080-desktop-full-hd-high-tech-wallpaper.jpg') no-repeat center center/cover;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-btn {
+      background: #ff6347;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .cta-btn:hover {
+      background: #e5533d;
+    }
+
+    /* About Section */
+    .about {
+      padding: 4rem 0;
+      background: #f4f4f4;
+    }
+
+    .about h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .profile-img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Projects Section */
+    .projects {
+      padding: 4rem 0;
+      background: #f9f9f9;
+    }
+
+    .projects h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .project-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #ff6347;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .project-link:hover {
+      background: #e5533d;
+    }
+
+    /* Assignments Section */
+    .assignments {
+      padding: 4rem 0;
+    }
+
+    .assignments h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .assignment-list {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .assignment-item {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: transform 0.3s;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .assignment-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .assignment-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+ background: #ff6347;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .assignment-link:hover {
+      background: #e5533d;
+    }
+
+    /* Footer */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    /* Slider Styles */
+    .slider {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 20px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .slider-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .slider-button {
+      background: #ff6347;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .slider-button:hover {
+      background: #e5533d;
+    }
+    
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">My Portfolio</div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#assignments">Assignments</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div>
+    <h2>Welcome to My Portfolio</h2>
+    <a href="#about" class="cta-btn">Learn More</a>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="container">
+    <h2>About Me</h2>
+    <div class="about-content">
+      <img src="https://thumbs.dreamstime.com/b/smiling-man-glasses-beard-wearing-white-shirt-arms-crossed-friendly-expression-cartoon-style-isolated-smiling-man-362608434.jpg" alt="Profile" class="profile-img">
+      <div>
+        <p>Hey there! I’m Yagav Akhilesh S R (23BRS1408), a second-year Computer Science student at VIT Chennai, specializing in AI and Robotics. Passionate about web development and artificial intelligence, I love building innovative solutions that blend creativity with cutting-edge technology.
+
+          From crafting sleek, responsive websites to experimenting with AI models, I’m always exploring new ways to push the boundaries of tech. Whether it’s developing intelligent systems, diving into deep learning, or optimizing user experiences, I enjoy turning ideas into functional, real-world applications.
+          
+          Currently, I’m sharpening my skills in full-stack web development, machine learning, and robotics, while actively working on projects that bridge AI and automation.
+          
+          When I’m not coding, you’ll probably find me exploring the latest tech trends, working on side projects, or geeking out over futuristic innovations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="projects">
+    <div class="container">
+      <h2>My Projects</h2>
+      <div class="slider">
+        <div class="slides">
+          <div class="slide">
+            <h3>Color Pallete Generator</h3>
+            <p>Generates 5 colors randomly when button pressed where the colors will be copied to the clipboard when pressed on the generated color.</p>
+            <a href="./1.html" target="_blank" class="assignment-link">View Project</a>
+          </div>
+          <div class="slide">
+            <h3>Digital Clock</h3>
+            <p>A simple Digital clock that can switch from light and dark mode and change from 12/24 fromat.</p>
+            <a href="./2.html" target="_blank" class="assignment-link">View Project</a>
+          </div>
+          <div class="slide">
+            <h3>To-Do List</h3>
+            <p>A List that will have all the works that are yet to be done.</p>
+            <a href="./3.html" target="_blank" class="assignment-link">View Project</a>
+          </div>
+          <div class="slide">
+            <h3>Weather App</h3>
+            <p>A website that detects your location and displays the weather in that particular region.</p>
+            <a href="./4.html" target="_blank" class="assignment-link">View Project</a>
+          </div>
+          <div class="slide">
+            <h3>Expense Tracker</h3>
+            <p>You can add all the expenses upto date and it will track them and give a neat visualization to present the spending.</p>
+            <a href="./5.html" target="_blank" class="assignment-link">View Project</a>
+          </div>
+        </div>
+        <div class="slider-buttons">
+          <button class="slider-button" id="prev"><</button>
+          <button class="slider-button" id="next">></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+<section id="assignments" class="assignments">
+  <div class="container">
+    <h2>My Assignments</h2>
+    <div class="assignment-list">
+      <div class="assignment-item">
+        <h3>Exercise 1</h3>
+        <a href="./Exercise 1.pdf" target="_blank" class="assignment-link">View Assignment</a>
+      </div>
+      <div class="assignment-item">
+        <h3>Exercise 2</h3>
+        <a href="./Exercise 2 (23BRS1408).pdf" target="_blank" class="assignment-link">View Assignment</a>
+      </div>
+      <div class="assignment-item">
+        <h3>Exercise 3</h3>
+        <a href="./Exercise 3 23BRS1408.pdf" target="_blank" class="assignment-link">View Assignment</a>
+      </div>
+      <div class="assignment-item">
+        <h3>Exercise 4</h3>
+        <a href="./Exercise 4.pdf" target="_blank" class="assignment-link">View Assignment</a>
+      </div>
+      <div class="assignment-item">
+        <h3>Exercise 5</h3>
+        <a href="./Exercise 5.pdf" target="_blank" class="assignment-link">View Assignment</a>
+      </div>
+      <div class="assignment-item">
+        <h3>Exercise 6</h3>
+        <a href="./Exercise 6 23BRS1408.pdf" target="_blank" class="assignment-link">View Assignment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>with 💖 from 23brs1408</p>
+</footer>
+
+<script>
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+        });
+    });
+
+    const slides = document.querySelector('.slides');
+    const slide = document.querySelectorAll('.slide');
+    const nextButton = document.getElementById('next');
+    const prevButton = document.getElementById('prev');
+    let currentIndex = 0;
+  
+    function showSlide(index) {
+      if (index >= slide.length) {
+        currentIndex = 0;
+      } else if (index < 0) {
+        currentIndex = slide.length - 1;
+      } else {
+        currentIndex = index;
+      }
+      const offset = -currentIndex * 100;
+      slides.style.transform = `translateX(${offset}%)`;
+    }
+  
+    nextButton.addEventListener('click', () => {
+      showSlide(currentIndex + 1);
+    });
+  
+    prevButton.addEventListener('click', () => {
+      showSlide(currentIndex - 1);
+    });
+  
+    showSlide(currentIndex);
+
+</script>
+
+</body>
+</html>
